@@ -56,6 +56,8 @@ This technology can be used for:
 
 ## Project Structure
 
+> **Note:** This project is developed in Google Colab notebooks for easy access to GPU resources and collaborative development.
+
 ```
 comic-strip-generator/
 ├── data/                    # Dataset files
@@ -74,14 +76,24 @@ comic-strip-generator/
 ### Prerequisites
 - Python 3.8+
 - PyTorch 1.12+
-- CUDA-capable GPU (recommended)
+- CUDA-capable GPU (recommended) (Google Colab provides free GPU access)
+### Setup in Google Colab
 
-### Installation
-```bash
-git clone https://github.com/Deepak-dv/comic-strip-generator.git
-cd comic-strip-generator
-pip install -r requirements.txt
-```
+**Option 1: Open Notebook Directly (Coming Soon)**
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Deepak-dv/comic-strip-generator)
+
+**Option 2: Manual Setup**
+```python
+# Clone the repository
+!git clone https://github.com/Deepak-dv/comic-strip-generator.git
+%cd comic-strip-generator
+
+# Install required packages
+!pip install -r requirements.txt
+
+# Enable GPU in Colab
+# Go to Runtime -> Change runtime type -> Hardware accelerator -> GPU
+``````
 
 ## Evaluation Metrics
 

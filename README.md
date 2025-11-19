@@ -1,126 +1,102 @@
 # Comic Strip Generator
 
-Deep learning multimodal system for creative comic strip generation using cross-modal attention and GANs.
+A multimodal deep learning project for my Deep Neural Networks and Learning Systems course. I'm building a system that can look at a sequence of comic panels and predict what comes next - both the image and the dialog!
 
-## Project Overview
+## What I'm Building
 
-This project implements an AI-powered comic strip generator that predicts the next panel in a comic sequence, including both the visual illustration and the dialog text. The system uses advanced deep learning techniques to understand the narrative flow and generate coherent, creative continuations of comic stories.
+Basically, I'm training a neural network to understand comic stories. You give it a few panels from a comic strip, and it generates the next panel with both:
+- The image (what the characters and scene look like)
+- The text (what they're saying or what's happening)
 
-## Motivation
+The cool part is that the model needs to understand both the visual story and the text together to make sensible predictions.
 
-Comic strips combine visual storytelling with text in a unique way. Traditional AI models struggle to generate content that maintains coherence across both modalities. This project addresses that challenge by implementing cross-modal attention mechanisms that allow the image and text components to inform each other, resulting in more engaging and contextually appropriate comic panels.
+## Why This Project?
 
-## Key Features
+I chose this because:
+- Comics are a unique challenge - they mix visual art with narrative text
+- Most AI models struggle to keep both modalities coherent
+- It's more interesting than just doing image or text generation separately
+- Could actually be useful for assistive tech or helping artists brainstorm ideas
 
-- **Multimodal Learning**: Processes both images and text simultaneously
-- **Cross-Modal Attention**: Novel attention mechanism that connects visual and textual features
-- **GAN-Based Image Generation**: Creates high-quality, style-consistent comic panel illustrations
-- **Sequence Modeling**: Uses temporal models to understand story progression
-- **Creative Output**: Generates both images and dialog for the next comic panel
+## My Approach
 
-## Architecture
+I'm implementing a few key components:
 
-The system consists of several key components:
+**For Processing Input:**
+- **Visual Encoder**: Using a CNN (probably ResNet) to extract features from the comic panel images
+- **Text Encoder**: LSTM or Transformer to process the dialog and descriptions
+- **Cross-Modal Attention**: This is my main innovation - it lets the image features and text features "talk" to each other so the model understands connections (like when a character mentions coffee and there's a coffee cup in the image)
 
-1. **Visual Encoder**: CNN-based encoder (ResNet/VGG) for extracting image features
-2. **Text Encoder**: RNN/LSTM/Transformer for processing dialog and descriptions
-3. **Cross-Modal Attention Layer**: Allows bidirectional information flow between image and text representations
-4. **Sequence Model**: LSTM/GRU for modeling temporal dependencies across panels
-5. **Dual Decoders**:
-   - GAN-based image decoder for generating comic panel visuals
-   - Autoregressive text decoder for generating dialog
+**For Understanding Sequence:**
+- **Sequence Model**: LSTM/GRU to understand the temporal flow of the story across multiple panels
+
+**For Generating Output:**
+- **Image Decoder**: Using a GAN to generate the next comic panel image
+- **Text Decoder**: Autoregressive decoder to generate the dialog
 
 ## Dataset
 
-We use the **StoryReasoning Dataset** which contains:
-- Sequential image-text pairs designed for grounded story generation
-- Rich annotations including objects, locations, actions, and descriptions
-- Diverse narrative styles suitable for comic generation
+I'm using the StoryReasoning Dataset which has:
+- Sequential image-text pairs designed for story understanding
+- Annotations for objects, locations, actions, and descriptions
+- Different narrative styles
 
-## Innovation
+## Technical Setup
 
-Our main contribution is the **cross-modal attention mechanism** that enables:
-- Better alignment between visual content and dialog
-- More coherent narrative progression
-- Enhanced creative generation compared to baseline models
+I'm developing this in **Google Colab** because:
+- Free GPU access (T4/P100 depending on availability)
+- Don't need to worry about local setup
+- Easy to share notebooks with my prof if needed
 
-We also integrate **GAN-based decoders** to produce more realistic and style-consistent comic illustrations.
+### How to Run
 
-## Applications
+If you want to check out my code:
 
-This technology can be used for:
-- **Assistive Technology**: Help visually impaired individuals experience comic strips through generated narratives
-- **Creative Tools**: Assist artists and writers in brainstorming and visualizing story ideas
-- **Educational Content**: Generate educational comics for learning materials
-- **Entertainment**: Create personalized comic content
-
-## Project Structure
-
-> **Note:** This project is developed in Google Colab notebooks for easy access to GPU resources and collaborative development.
-
-```
-comic-strip-generator/
-├── data/                    # Dataset files
-├── src/                     # Source code
-│   ├── models/             # Model architectures
-│   ├── train.py            # Training script
-│   └── evaluate.py         # Evaluation script
-├── notebooks/              # Jupyter notebooks for experiments
-├── results/                # Generated outputs and visualizations
-├── configs/                # Configuration files
-└── docs/                   # Documentation
-```
-
-## Getting Started
-
-### Prerequisites
-- Python 3.8+
-- PyTorch 1.12+
-- CUDA-capable GPU (recommended) (Google Colab provides free GPU access)
-### Setup in Google Colab
-
-**Option 1: Open Notebook Directly (Coming Soon)**
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Deepak-dv/comic-strip-generator)
-
-**Option 2: Manual Setup**
 ```python
-# Clone the repository
+# Clone this repo in Colab
 !git clone https://github.com/Deepak-dv/comic-strip-generator.git
 %cd comic-strip-generator
 
-# Install required packages
+# Install dependencies
 !pip install -r requirements.txt
 
-# Enable GPU in Colab
-# Go to Runtime -> Change runtime type -> Hardware accelerator -> GPU
-``````
+# Make sure you enable GPU in Colab
+# Runtime -> Change runtime type -> Hardware accelerator -> GPU
+```
 
-## Evaluation Metrics
+## Research Questions I'm Exploring
 
-We evaluate our model using:
-- **Image Quality**: FID (Fréchet Inception Distance)
-- **Text Quality**: BLEU score, perplexity
-- **Narrative Coherence**: Custom coherence metrics
-- **Image-Text Alignment**: Cross-modal similarity scores
+1. Does cross-modal attention actually improve story coherence compared to just concatenating image and text features?
+2. How well do GANs work for generating comic-style images vs traditional decoders?
+3. Can the model learn different comic styles or does it just average everything?
 
-## Research Questions
+## Evaluation
 
-1. Does cross-modal attention improve story coherence compared to baseline fusion methods?
-2. How do GAN-based decoders compare to traditional CNNs for comic panel generation?
-3. What is the impact of different sequence modeling approaches on narrative quality?
+I'm planning to measure:
+- **Image Quality**: FID score to see if generated images look realistic
+- **Text Quality**: BLEU score and perplexity for the generated dialog
+- **Coherence**: Custom metric to check if the next panel actually makes sense given the story
+- **Alignment**: How well the generated image matches the generated text
 
-## Status
+## Current Status
 
-🚧 **Project in Development** - This repository is being actively developed as part of the Deep Neural Networks and Learning Systems coursework.
+🚧 **Just started** - Currently setting up the project structure and reviewing the dataset. Will update as I make progress.
 
-## Acknowledgments
+## Project Structure
 
-This project is developed as part of the **Deep Neural Networks and Learning Systems** course assessment.
+```
+comic-strip-generator/
+├── data/                    # Dataset
+├── notebooks/              # Colab notebooks for experiments
+├── models/                 # Model architecture code
+├── results/                # Generated samples and metrics
+└── configs/                # Training configs
+```
 
-## License
+## Course Info
 
-This project is for educational purposes.
+This is my final project for the Deep Neural Networks and Learning Systems course (Masters in Advanced Robotics and Artificial Intelligence).
 
 ---
 
-*Project by Deepak-dv | Masters in Advanced Robotics and Artificial Intelligence*
+*Feel free to reach out if you have questions or suggestions!*

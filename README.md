@@ -95,7 +95,7 @@ comic-strip-generator/
 
 ## Course Info
 
-This is my final project for the Deep Neural Networks and Learning Systems course (Masters in Advanced Robotics and Artificial Intelligence).
+This is my final project for the Deep Neural Networks and Learning Systems course (Masters in Artificial Intelligence).
 
 ---
 

@@ -1,102 +1,68 @@
-# Comic Strip Generator
+# Creative Comic Strip Generator
 
-A multimodal deep learning project for my Deep Neural Networks and Learning Systems course. I'm building a system that can look at a sequence of comic panels and predict what comes next - both the image and the dialog!
+Deep learning multimodal system for visual storytelling that predicts the next comic panel and generates a matching caption from previous frames and story text.
 
-## What I'm Building
+## Quick Links
 
-Basically, I'm training a neural network to understand comic stories. You give it a few panels from a comic strip, and it generates the next panel with both:
-- The image (what the characters and scene look like)
-- The text (what they're saying or what's happening)
+- **[Experiments Notebook](experiments.ipynb)** – Full experimental workflow and ablations  
+- **[Source Code](src/)** – Model, training, and utility modules  
+- **[Results](results/)** – Qualitative examples, sample comics, and loss curves  
 
-The cool part is that the model needs to understand both the visual story and the text together to make sensible predictions.
+## Innovation Summary
 
-## Why This Project?
+**I extend a frame‑prediction baseline with cross‑modal attention and a caption decoder, fusing visual context (previous panels) with BERT text features to generate more coherent future panels and captions.**
 
-I chose this because:
-- Comics are a unique challenge - they mix visual art with narrative text
-- Most AI models struggle to keep both modalities coherent
-- It's more interesting than just doing image or text generation separately
-- Could actually be useful for assistive tech or helping artists brainstorm ideas
+The model uses a ResNet encoder, LSTM sequence encoder, cross‑modal attention over visual and textual features, and a U‑Net style decoder with perceptual loss, plus an LSTM caption decoder on top of the fused representation.
 
-## My Approach
+## Key Results
 
-I'm implementing a few key components:
+Training continued from epoch 10 up to epoch 20 on the StoryReasoning dataset (streaming), with the following training losses:
 
-**For Processing Input:**
-- **Visual Encoder**: Using a CNN (probably ResNet) to extract features from the comic panel images
-- **Text Encoder**: LSTM or Transformer to process the dialog and descriptions
-- **Cross-Modal Attention**: This is my main innovation - it lets the image features and text features "talk" to each other so the model understands connections (like when a character mentions coffee and there's a coffee cup in the image)
+- Epoch 11: **1.6791**  
+- Epoch 12: **1.4275**  
+- Epoch 13: **1.7058**  
+- Epoch 14: **1.5227**  
+- Epoch 15: **1.9970**  
+- Epoch 16: **1.8283**  
+- Epoch 17: **0.9697** *(lowest observed training loss)*  
+- Epoch 18: **2.0261**  
+- Epoch 19: **1.2595**  
+- Epoch 20: **1.4808**
 
-**For Understanding Sequence:**
-- **Sequence Model**: LSTM/GRU to understand the temporal flow of the story across multiple panels
+Summarised table:
 
-**For Generating Output:**
-- **Image Decoder**: Using a GAN to generate the next comic panel image
-- **Text Decoder**: Autoregressive decoder to generate the dialog
+| Metric               | Value   |
+|----------------------|---------|
+| Best epoch           | 17      |
+| Best epoch loss      | 0.9697  |
+| Final epoch (20) loss| 1.4808  |
 
-## Dataset
+Qualitative results in `results/figures/` show that predicted panels remain structurally consistent with the input sequence, while generated captions capture key story entities and actions.
 
-I'm using the StoryReasoning Dataset which has:
-- Sequential image-text pairs designed for story understanding
-- Annotations for objects, locations, actions, and descriptions
-- Different narrative styles
+## Most Important Finding
 
-## Technical Setup
+> Cross‑modal attention over both the visual sequence and BERT text embeddings produced more coherent predicted panels and captions than using visual information alone, with the best training loss reached at epoch 17 (0.9697).
 
-I'm developing this in **Google Colab** because:
-- Free GPU access (T4/P100 depending on availability)
-- Don't need to worry about local setup
-- Easy to share notebooks with my prof if needed
+## Pre‑Registered Plan vs Implementation
 
-### How to Run
+- **Planned:** Train and evaluate the model end‑to‑end in a single Google Colab environment with a GPU, then run final experiments on the same account.  
+- **Implemented:** Training epochs 1–20 were run on an initial Colab account with GPU access; due to GPU usage limits this work was continued on a separate university Colab account using the saved checkpoints (`model_epoch_*.pth`, `model_best_multimodal.pth`, `model_final_multimodal.pth`).  
+- **Outcome:** Lowest training loss of **0.9697** at epoch 17 and visually more consistent predicted panels plus captions that better align with the narrative.
 
-If you want to check out my code:
+## Reproducibility Notes
 
-```python
-# Clone this repo in Colab
-!git clone https://github.com/Deepak-dv/comic-strip-generator.git
-%cd comic-strip-generator
+Because of Colab GPU limits, the full 20‑epoch training run was not repeated from scratch on the university account. Instead, the university notebook:
 
-# Install dependencies
-!pip install -r requirements.txt
+1. Loads the pre‑trained checkpoints saved from the original GPU run.  
+2. Re‑runs only the evaluation and qualitative visualization cells.  
 
-# Make sure you enable GPU in Colab
-# Runtime -> Change runtime type -> Hardware accelerator -> GPU
-```
+This mirrors the final model behaviour without incurring the full GPU cost again and matches the results reported in this README.
 
-## Research Questions I'm Exploring
+## How to Reproduce
 
-1. Does cross-modal attention actually improve story coherence compared to just concatenating image and text features?
-2. How well do GANs work for generating comic-style images vs traditional decoders?
-3. Can the model learn different comic styles or does it just average everything?
+1. Clone the repository and install dependencies:
 
-## Evaluation
-
-I'm planning to measure:
-- **Image Quality**: FID score to see if generated images look realistic
-- **Text Quality**: BLEU score and perplexity for the generated dialog
-- **Coherence**: Custom metric to check if the next panel actually makes sense given the story
-- **Alignment**: How well the generated image matches the generated text
-
-## Current Status
-
-🚧 **Just started** - Currently setting up the project structure and reviewing the dataset. Will update as I make progress.
-
-## Project Structure
-
-```
-comic-strip-generator/
-├── data/                    # Dataset
-├── notebooks/              # Colab notebooks for experiments
-├── models/                 # Model architecture code
-├── results/                # Generated samples and metrics
-└── configs/                # Training configs
-```
-
-## Course Info
-
-This is my final project for the Deep Neural Networks and Learning Systems course (Masters in Artificial Intelligence).
-
----
-
-*Feel free to reach out if you have questions or suggestions!*
+   ```bash
+   git clone https://github.com/Deepak-dv/comic-strip-generator.git
+   cd comic-strip-generator
+   pip install -r requirements.txt

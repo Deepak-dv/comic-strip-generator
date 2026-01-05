@@ -1,26 +1,35 @@
-project_name: comic_strip_generator
-dataset:
-  name: daniel3303/StoryReasoning
-  sequence_length: 3
-  max_train_stories: 800
-  max_val_stories: 200
-  max_test_stories: 100
-  image_size: 256
+# Device settings
+device: cuda  # or cpu
 
-training:
-  batch_size: 2
-  num_epochs: 20
-  start_epoch: 0
-  learning_rate: 0.0001
-  device: cpu   # or cuda if GPU is available
+# Paths
+save_dir: /content/drive/MyDrive
+train_dataset_path: /content/drive/MyDrive/train
+val_dataset_path: /content/drive/MyDrive/val
+test_dataset_path: /content/drive/MyDrive/test
+checkpoint_path: model_epoch_10.pth
+best_model_path: model_best_multimodal.pth
+final_model_path: model_final_multimodal.pth
 
-model:
-  encoder_backbone: resnet18
-  text_encoder: bert-base-uncased
-  feature_dim: 512
+# Training hyperparameters
+num_epochs: 20
+start_epoch: 10
+batch_size: 2
+learning_rate: 0.0001
 
-paths:
-  drive_root: /content/drive/MyDrive
-  checkpoint_dir: /content/drive/MyDrive
-  best_checkpoint: /content/drive/MyDrive/model_best_multimodal.pth
-  final_checkpoint: /content/drive/MyDrive/model_final_multimodal.pth
+# Model settings
+vocab_size: 30522  # BERT-base uncased
+sequence_length: 3
+image_size: [256, 256]
+feature_dim: 512
+hidden_dim: 512
+num_layers: 2
+dropout: 0.1
+
+# Data loader
+shuffle: true
+max_train_stories: 800
+max_val_stories: 200
+max_test_stories: 100
+
+# Evaluation
+num_eval_batches: 20

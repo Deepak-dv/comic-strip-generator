@@ -1,4 +1,7 @@
 ```markdown
+
+**Author:** Deepak Ravi
+
 # Creative Comic Strip Generator
 
 Deep learning multimodal system that predicts the next comic panel and generates a matching caption from previous frames and story text.
@@ -7,7 +10,10 @@ Deep learning multimodal system that predicts the next comic panel and generates
 
 - **[CREATIVE_COMIC_STRIP_GENERATOR Notebook](CREATIVE_COMIC_STRIP_GENERATOR.ipynb)** – Full experimental workflow  
 - **[Source Code](src/)** – Model, training, and utilities  
-- **[Results](results/)** – Qualitative examples and loss curves  
+- **[Results](results/)** – Qualitative examples and loss curves
+
+I have used the **StoryReasoning** dataset for training and evaluation:
+- Dataset: https://huggingface.co/datasets/daniel3303/StoryReasoning
 
 ## Innovation Summary
 

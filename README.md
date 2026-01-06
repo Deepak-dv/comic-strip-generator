@@ -5,7 +5,7 @@ Deep learning multimodal system that predicts the next comic panel and generates
 
 ## Quick Links
 
-- **[Experiments Notebook](experiments.ipynb)** – Full experimental workflow  
+- **[CREATIVE_COMIC_STRIP_GENERATOR Notebook](CREATIVE_COMIC_STRIP_GENERATOR.ipynb)** – Full experimental workflow  
 - **[Source Code](src/)** – Model, training, and utilities  
 - **[Results](results/)** – Qualitative examples and loss curves  
 
@@ -39,13 +39,13 @@ Qualitative samples in `results/figures/` show predicted panels that stay consis
 
 2. Training (optional, GPU recommended):
 
-   - Open `experiments.ipynb`.  
+   - Open `CREATIVE_COMIC_STRIP_GENERATOR.ipynb`.  
    - Run cells to load the dataset, build the model, and train for 1–20 epochs, saving `model_best_multimodal.pth`.
 
 3. Evaluation / visuals:
 
    - Ensure `model_best_multimodal.pth` and `model_final_multimodal.pth` are in the paths given in `config.yaml`.  
-   - In `experiments.ipynb`, run only the data/model cells, checkpoint loading, evaluation, and qualitative visualization cells.
+   - In `CREATIVE_COMIC_STRIP_GENERATOR.ipynb`, run only the data/model cells, checkpoint loading, evaluation, and qualitative visualization cells.
 
 ### Using the Modular Code
 
@@ -71,7 +71,7 @@ optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
 
 ```text
 comic-strip-generator/
-├── experiments.ipynb
+├── CREATIVE_COMIC_STRIP_GENERATOR.ipynb
 ├── config.yaml
 ├── README.md
 ├── requirements.txt
